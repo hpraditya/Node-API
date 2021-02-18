@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 let db;
 
-const mongourl = "mongodb+srv://admin:admin@cluster0.0y7ku.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const mongourl = "mongodb+srv://admin:admin@cluster0.0y7ku.mongodb.net/restAppEdureka?retryWrites=true&w=majority";
 
 // mendefinisikan body parser agar bisa post ke db
 app.use(cors());
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 // test connection
-app.get('/test',(req,res)=>{
+app.get('/',(req,res)=>{
     res.send("Connected");
 });
 
@@ -54,18 +54,11 @@ app.get('/rest',(req,res)=>{
     });
 });
 
-//restaurant per city route
-app.get('/:id',(req,res)=>{
-    var id = req.params.id;
-    db.collection('restaurant').find({city_name:id}).toArray((err,result)=>{
-        if(err) throw err;
-        res.send(result);
-    });
-});
 
 //city route
 //sort based on city name asc=1 or desc=-1
 app.get('/city',(req,res)=>{
+    let limit = 100;
     let sortCondition = {city_name:1};
     if(req.query.sort && req.query.limit){
         sortCondition = {city_name: Number(req.query.sort)};
