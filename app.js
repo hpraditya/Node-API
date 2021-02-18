@@ -2,13 +2,14 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 9900;
 const mongo = require('mongodb');
-const MongoClient= mongo.MongoClient;
+const MongoClient = mongo.MongoClient;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const mongourl = "mongodb+srv://admin:admin@cluster0.0y7ku.mongodb.net/restAppEdureka?retryWrites=true&w=majority";
-
+//const mongourl = "mongodb+srv://admin:admin@cluster0.0y7ku.mongodb.net/restAppEdureka?retryWrites=true&w=majority";
+const mongourl = "mongodb+srv://dev:mongo123@cluster0.f8vmc.mongodb.net/edurekinternship?retryWrites=true&w=majority";
 let db;
+
 
 // mendefinisikan body parser agar bisa post ke db
 app.use(cors());
@@ -101,7 +102,6 @@ app.get("/orders",(req,res)=>{
     });
 });
 
-//connection with mongoserver
 MongoClient.connect(mongourl,(err,connection)=>{
     if(err) console.log(err);
     db = connection.db('restAppEdureka');
