@@ -127,7 +127,7 @@ app.get("/orders",(req,res)=>{
 //connection with mongoserver
 MongoClient.connect(mongourl,(err,connection)=>{
     if(err) console.log(err);
-    db = connection.db('assignment-4-hpraditya');
+    db = connection.db('restAppEdureka');
 
     app.listen(port,(err)=>{
         if(err) throw err;
