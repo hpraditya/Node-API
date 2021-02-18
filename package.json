@@ -1,26 +1,25 @@
 {
-  "name": "assignment-4-hpraditya",
+  "name": "node-api-latihan-crud",
   "version": "1.0.0",
-  "description": "api to retrieve data from mongodb database",
+  "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon app.js",
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edureka-intership/assignment-4-hpraditya.git"
+    "url": "git+https://github.com/hpraditya/Node-API.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/edureka-intership/assignment-4-hpraditya/issues"
+    "url": "https://github.com/hpraditya/Node-API/issues"
   },
-  "homepage": "https://github.com/edureka-intership/assignment-4-hpraditya#readme",
+  "homepage": "https://github.com/hpraditya/Node-API#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongodb": "^3.6.3"
+    "mongodb": "^3.6.4"
   }
 }

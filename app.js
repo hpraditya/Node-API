@@ -5,9 +5,10 @@ const mongo = require('mongodb');
 const MongoClient= mongo.MongoClient;
 const bodyParser = require('body-parser');
 const cors = require('cors');
-let db;
 
 const mongourl = "mongodb+srv://admin:admin@cluster0.0y7ku.mongodb.net/restAppEdureka?retryWrites=true&w=majority";
+
+let db;
 
 // mendefinisikan body parser agar bisa post ke db
 app.use(cors());
