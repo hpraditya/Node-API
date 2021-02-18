@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
-const port = 8900;
+const port = process.env.PORT || 8900;
 const mongo = require('mongodb');
 const MongoClient= mongo.MongoClient;
-const mongourl = "mongodb://localhost:27017";
 const bodyParser = require('body-parser');
 const cors = require('cors');
 let db;
+
+const mongourl = "mongodb+srv://admin:admin@cluster0.0y7ku.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 // mendefinisikan body parser agar bisa post ke db
 app.use(cors());
