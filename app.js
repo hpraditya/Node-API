@@ -83,23 +83,6 @@ app.get('/city',(req,res)=>{
     });
 });
 
-//widget route
-app.get('/widgit',(req,res)=>{
-    db.collection('widgit').find().toArray((err,result)=>{
-        if(err) throw err;
-        res.send(result);
-    });
-});
-
-//location route
-app.get('/location',(req,res)=>{
-    db.collection('location').find().toArray((err,result)=>{
-        if(err) throw err;
-        res.send(result);
-    });
-});
-
-
 //mealtype route
 app.get('/mealtype',(req,res)=>{
     db.collection('mealtype').find().toArray((err,result)=>{
