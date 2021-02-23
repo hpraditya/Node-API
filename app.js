@@ -56,7 +56,7 @@ app.get('/rest',(req,res)=>{
 });
 
 //rest details
-app.get('/rest:id',(req,res)=>{
+app.get('/rest/:id',(req,res)=>{
     var id = req.params.id;
     db.collection('restaurant').find({_id:id}).toArray((err,result)=>{
         if(err) throw err;
