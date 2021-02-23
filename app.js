@@ -19,6 +19,7 @@ app.get('/',(req,res)=>{
     res.send("Connected");
 });
 
+
 // rest route 
 app.get('/rest',(req,res)=>{
     var condition = {};
@@ -49,6 +50,15 @@ app.get('/rest',(req,res)=>{
     }
 
     db.collection('restaurant').find(condition).toArray((err,result)=>{
+        if(err) throw err;
+        res.send(result);
+    });
+});
+
+//rest details
+app.get('/rest:id',(req,res)=>{
+    var id = req.params.id;
+    db.collection('restaurant').find({_id:id}).toArray((err,result)=>{
         if(err) throw err;
         res.send(result);
     });
