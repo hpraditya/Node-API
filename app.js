@@ -98,6 +98,12 @@ app.get('/restFilter/:mealId',(req,res)=>{
         condition ={$and :[{"type.mealtype":req.params.mealId},{"Cuisine.cuisine":req.query.cuisine}]}; 
     }
 
+    //sort restaurant asc or desc
+    else if(req.query.sort && req.query.mealtype){
+        condition ={"type.mealtype":req.params.mealId};
+        sortCondition = {name: Number(req.query.sort)}; 
+    }
+
     db.collection('restaurant').find(condition).sort(sortCondition).toArray((err,result)=>{
         if(err) throw err;
         res.send(result);
