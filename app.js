@@ -58,8 +58,15 @@ app.get('/rest',(req,res)=>{
 // rest per meal id route 
 app.get('/restFilter/:mealId',(req,res)=>{
     var condition = {};
+    //get restaurant based on mealtype, cost and cuisine
+    if(req.query.mealtype && req.query.cuisine && req.query.lcost && req.query.hcost){
+        condition ={$and:[{"type.mealtype":req.query.mealtype},
+                    {"Cuisine.cuisine":req.query.cuisine},
+                    {cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}; 
+    }
+
     // get restraurant based on mealtype and cost lower than upper limit and greater than lower limit
-    if(req.query.mealtype && req.query.lcost && req.query.hcost){
+    else if(req.query.mealtype && req.query.lcost && req.query.hcost){
         condition ={$and:[{"type.mealtype":req.query.mealtype},
                     {cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}; 
     }
