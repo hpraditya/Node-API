@@ -58,11 +58,27 @@ app.get('/rest',(req,res)=>{
 // rest per meal id route 
 app.get('/restFilter/:mealId',(req,res)=>{
     var condition = {};
-    //get restaurant based on mealtype, cost and cuisine
-    if(req.query.mealtype && req.query.cuisine && req.query.lcost && req.query.hcost){
+    let sortCondition = {name : 1};
+    //get restaurant based on mealtype, cost and cuisine and sort based on rest name
+    if(req.query.sort && req.query.mealtype && req.query.cuisine && req.query.lcost && req.query.hcost){
         condition ={$and:[{"type.mealtype":req.query.mealtype},
                     {"Cuisine.cuisine":req.query.cuisine},
-                    {cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}; 
+                    {cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]};
+        sortCondition = {name: Number(req.query.sort)}; 
+    }
+
+    //get restaurant based on mealtype, cost and cuisine
+    else if(req.query.mealtype && req.query.cuisine && req.query.lcost && req.query.hcost){
+        condition ={$and:[{"type.mealtype":req.query.mealtype},
+                    {"Cuisine.cuisine":req.query.cuisine},
+                    {cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]};
+    }
+
+    // get restraurant based on mealtype and cost lower than upper limit and greater than lower limit and sort by name
+    else if(req.query.sort && req.query.mealtype && req.query.lcost && req.query.hcost){
+        condition ={$and:[{"type.mealtype":req.query.mealtype},
+                    {cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]};
+        sortCondition = {name: Number(req.query.sort)};  
     }
 
     // get restraurant based on mealtype and cost lower than upper limit and greater than lower limit
@@ -71,12 +87,18 @@ app.get('/restFilter/:mealId',(req,res)=>{
                     {cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}; 
     }
 
+    // get restaurant based on mealtype AND cuisine and sort based on rest name
+    else if(req.query.sort && req.query.mealtype && req.query.cuisine){
+        condition ={$and :[{"type.mealtype":req.params.mealId},{"Cuisine.cuisine":req.query.cuisine}]}; 
+        sortCondition = {name: Number(req.query.sort)}; 
+    }
+
     // get restaurant based on mealtype AND cuisine
     else if(req.query.mealtype && req.query.cuisine){
         condition ={$and :[{"type.mealtype":req.params.mealId},{"Cuisine.cuisine":req.query.cuisine}]}; 
     }
 
-    db.collection('restaurant').find(condition).toArray((err,result)=>{
+    db.collection('restaurant').find(condition).sort(sortCondition).toArray((err,result)=>{
         if(err) throw err;
         res.send(result);
     });
