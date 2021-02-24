@@ -55,6 +55,26 @@ app.get('/rest',(req,res)=>{
     });
 });
 
+// rest per meal id route 
+app.get('/restFilter/:mealId',(req,res)=>{
+    var condition = {};
+    // get restraurant based on mealtype and cost lower than upper limit and greater than lower limit
+    if(req.query.mealtype && req.query.lcost && req.query.hcost){
+        condition ={$and:[{"type.mealtype":req.query.mealtype},
+                    {cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}; 
+    }
+
+    // get restaurant based on mealtype AND cuisine
+    else if(req.query.mealtype && req.query.cuisine){
+        condition ={$and :[{"type.mealtype":req.params.mealId},{"Cuisine.cuisine":req.query.cuisine}]}; 
+    }
+
+    db.collection('restaurant').find(condition).toArray((err,result)=>{
+        if(err) throw err;
+        res.send(result);
+    });
+});
+
 //rest details
 app.get('/rest/:id',(req,res)=>{
     var id = req.params.id;
@@ -89,6 +109,14 @@ app.get('/city',(req,res)=>{
 //mealtype route
 app.get('/mealtype',(req,res)=>{
     db.collection('mealtype').find().toArray((err,result)=>{
+        if(err) throw err;
+        res.send(result);
+    });
+});
+
+//cuisine route
+app.get('/cuisine',(req,res)=>{
+    db.collection('cuisine').find().toArray((err,result)=>{
         if(err) throw err;
         res.send(result);
     });
